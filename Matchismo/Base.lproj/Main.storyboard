@@ -167,10 +167,22 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RbN-7B-hzt">
+                                <rect key="frame" x="254" y="323" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="ReDraw">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="RedrawAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="5bE-q6-Lk2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081399917603" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="redrawButton" destination="RbN-7B-hzt" id="0pt-eO-qfL"/>
                         <outlet property="scoreLabel" destination="lME-CR-1RP" id="Zo9-39-ZCq"/>
                         <outletCollection property="cardButtons" destination="3fQ-bC-85b" id="sdQ-M8-0TI"/>
                         <outletCollection property="cardButtons" destination="dVu-B5-Pt7" id="SKE-kZ-zV6"/>
@@ -188,7 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-220" y="-15"/>
+            <point key="canvasLocation" x="-280" y="-148"/>
         </scene>
     </scenes>
     <resources>

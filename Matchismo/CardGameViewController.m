@@ -11,13 +11,13 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
+    @property (weak, nonatomic) IBOutlet UIButton *redrawButton;
     @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
     @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
     @property (nonatomic, strong) CardMatchingGame *game;
 @end
 
 @implementation CardGameViewController
-
 
     - (void)viewDidLoad {
         [super viewDidLoad];
@@ -59,6 +59,10 @@
             cardButton.enabled = !card.isMatched;
             self.scoreLabel.text = [NSString stringWithFormat:@"Score:%d", self.game.score];
         }
+    }
+    - (IBAction)RedrawAction:(id)sender {
+	    [self.game redrawCards:[self.cardButtons count]];
+	    [self updateUI];
     }
 
     - (IBAction)touchCardButton:(UIButton *)sender {
