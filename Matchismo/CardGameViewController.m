@@ -68,12 +68,14 @@
     - (IBAction)RedrawAction:(id)sender 	{
 	    //[self.game redrawCards:[self.cardButtons count]];
         self.game = nil;
+        self.switchButton.enabled = YES;
         [self updateUI];
     }
 
     - (IBAction)touchCardButton:(UIButton *)sender {
         int cardIndex = [self.cardButtons indexOfObject:sender];
         [self.game chooseCardAtIndex:cardIndex];
+        self.switchButton.enabled = NO;
         [self updateUI];
     }
 
