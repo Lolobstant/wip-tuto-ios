@@ -11,7 +11,7 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
-    @property (weak, nonatomic) IBOutlet UIButton *redrawButton;
+    @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
     @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
     @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
     @property (nonatomic, strong) CardMatchingGame *game;
@@ -31,7 +31,7 @@
 
     -(CardMatchingGame *)game {
         if(!_game)
-            _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
+            _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck] nMatching:self.switchButton.isOn ? 3 : 2];
         return _game;
     }
 
@@ -44,7 +44,7 @@
     }
 
     -(UIImage *)backgroundImageForCard:(Card *)card {
-        NSLog(@"%d, %@", card.isChosen, card.isChosen?@"cardFront":@"cardBack");
+//        NSLog(@"%d, %@", card.isChosen, card.isChosen?@"cardFront":@"cardBack");
         return [UIImage imageNamed:card.isChosen ? @"cardFront" : @"cardBack"];
     }
 
@@ -60,9 +60,15 @@
             self.scoreLabel.text = [NSString stringWithFormat:@"Score:%d", self.game.score];
         }
     }
-    - (IBAction)RedrawAction:(id)sender {
-	    [self.game redrawCards:[self.cardButtons count]];
-	    [self updateUI];
+    - (IBAction)switchMode:(id)sender {
+        self.game = nil;
+        [self updateUI];
+    }
+
+    - (IBAction)RedrawAction:(id)sender 	{
+	    //[self.game redrawCards:[self.cardButtons count]];
+        self.game = nil;
+        [self updateUI];
     }
 
     - (IBAction)touchCardButton:(UIButton *)sender {

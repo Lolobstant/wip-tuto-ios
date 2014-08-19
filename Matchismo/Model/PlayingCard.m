@@ -45,14 +45,21 @@
 
     -(int)match:(NSArray *)otherCards {
         int score = 0;
-        
-        if ([otherCards count] == 1) {
-            PlayingCard *otherCard = [otherCards firstObject];
-            if (otherCard.rank == self.rank)
-                score = 4;
-            else if (otherCard.suit == self.suit)
-                score = 1;
+        int flag = 0;
+        for (int i = 0; i < [otherCards count]; i++) {
+            PlayingCard *otherCard = otherCards[i];
+            if (otherCard.rank == self.rank) {
+                score += 4 * (i + 1);
+                flag++;
+            }
+            else if (otherCard.suit == self.suit) {
+                score += 1 * (i + 1);
+                flag++;
+            }
         }
+//        NSLog(@"flag = %d, count = %d", flag, [otherCards count]);
+        if (flag < [otherCards count])
+            score = 0;
         
         return score;
     }

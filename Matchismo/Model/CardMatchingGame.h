@@ -14,9 +14,8 @@
     @property (nonatomic, readonly)NSInteger score;
 
     /** designated initializer **/
-	- (instancetype) initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck;
+- (instancetype) initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck nMatching:(NSUInteger)n;
 	- (void)chooseCardAtIndex:(NSUInteger)index;
 	- (Card *)cardAtIndex:(NSUInteger)index;
-	-(void)redrawCards:(NSUInteger)count;
 
 @end
