@@ -11,6 +11,7 @@
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
+    @property (weak, nonatomic) IBOutlet UILabel *feedBackLabel;
     @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
     @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
     @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
@@ -44,7 +45,6 @@
     }
 
     -(UIImage *)backgroundImageForCard:(Card *)card {
-//        NSLog(@"%d, %@", card.isChosen, card.isChosen?@"cardFront":@"cardBack");
         return [UIImage imageNamed:card.isChosen ? @"cardFront" : @"cardBack"];
     }
 
@@ -58,6 +58,7 @@
                         forState:UIControlStateNormal];
             cardButton.enabled = !card.isMatched;
             self.scoreLabel.text = [NSString stringWithFormat:@"Score:%d", self.game.score];
+            self.feedBackLabel.text = self.game.lastAction;
         }
     }
     - (IBAction)switchMode:(id)sender {
@@ -66,7 +67,6 @@
     }
 
     - (IBAction)RedrawAction:(id)sender 	{
-	    //[self.game redrawCards:[self.cardButtons count]];
         self.game = nil;
         self.switchButton.enabled = YES;
         [self updateUI];

@@ -12,7 +12,9 @@
     @property (nonatomic, readwrite)NSInteger score;
     @property (nonatomic, strong)NSMutableArray	*cards;
     @property (nonatomic)NSUInteger n;
+    @property (nonatomic, readwrite)NSString *lastAction;
     -(NSUInteger)matchCards:(NSMutableArray *)cards;
+    -(void)updateLastAction:(NSMutableArray *)cards points:(NSUInteger)nb;
 @end
 
 @implementation CardMatchingGame
@@ -48,7 +50,7 @@ static const int COST_TO_CHOOSE = 1;
     -(void)chooseCardAtIndex:(NSUInteger)index {
         Card *card = [self cardAtIndex:index];
         NSMutableArray *cardList = [[NSMutableArray alloc] init];
-        NSLog(@"[here !!!] %d", self.n);
+        self.lastAction = [@"" stringByAppendingFormat:@"Card chosen : %@", card.contents];
         if (!card.isMatched) {
             if (card.isChosen) {
                 card.chosen = NO;
@@ -61,13 +63,18 @@ static const int COST_TO_CHOOSE = 1;
                             [cardList addObject:card];
                             int matchScore = [self matchCards:cardList];
                             if (matchScore) {
-                                self.score += matchScore * MATCH_BONUS;
+                                int pointsMade = matchScore * MATCH_BONUS;
+                                self.score += pointsMade;
+                                [self updateLastAction:cardList points:pointsMade];
                                 card.matched = YES;
                                 for (Card *other in cardList)
                                     other.matched = YES;
                             }
                             else {
-                                self.score -= MISMATCH_PENALTY - (self.n - 2);
+                                int pointsMade = MISMATCH_PENALTY - (self.n - 2);
+                                self.score -= pointsMade;
+                                pointsMade *= -1;
+                                [self updateLastAction:cardList points:pointsMade];
                                 for (Card *other in cardList)
                                     other.chosen = NO;
                             }
@@ -99,9 +106,20 @@ static const int COST_TO_CHOOSE = 1;
             }
         }
         NSLog(@"flag = %d, cardsCount = %d", flag, [cards count]);
-        if (flag < [cards count] - 1)
+        if (flag < [cards count] - 2)
             score = 0;
         return score;
+    }
+
+    -(void)updateLastAction:(NSMutableArray *)cards points:(NSUInteger)nb {
+        self.lastAction = @"";
+        for (Card *card in cards) {
+            self.lastAction = [self.lastAction stringByAppendingString:card.contents];
+            self.lastAction = [self.lastAction stringByAppendingString:@", "];
+        }
+        NSLog(@"points : %d %d", nb, nb > 0);
+        NSString *match = (nb > 0) ? @"Match!":@"Don't Match!";
+        self.lastAction = [self.lastAction stringByAppendingFormat:@"%@, for %d points", match, nb];
     }
 
 

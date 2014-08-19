@@ -57,10 +57,6 @@
                 flag++;
             }
         }
-//        NSLog(@"flag = %d, count = %d", flag, [otherCards count]);
-        if (flag < [otherCards count])
-            score = 0;
-        
         return score;
     }
 
